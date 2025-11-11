@@ -28,8 +28,10 @@ const Register = () => {
     }
 
     try {
+      // Create user in Firebase
       await createUser(email, password);
 
+      // Save user to MongoDB via backend
       const newUser = {
         name,
         email,
