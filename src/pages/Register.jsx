@@ -2,9 +2,11 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
+import { updateProfile } from "firebase/auth";
+import { auth } from "../firebase/firebase.config";
 
 const Register = () => {
-  const { createUser, signInWithGoogle } = useContext(AuthContext);
+  const { createUser, signInWithGoogle, setUser } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [photoURL, setPhotoURL] = useState("");
   const [email, setEmail] = useState("");
@@ -30,6 +32,14 @@ const Register = () => {
     try {
       // Create user in Firebase
       await createUser(email, password);
+
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+        photoURL: photoURL,
+      });
+
+      await auth.currentUser.reload();
+      setUser(auth.currentUser);
 
       // Save user to MongoDB via backend
       const newUser = {
@@ -57,6 +67,14 @@ const Register = () => {
     try {
       const result = await signInWithGoogle();
       const user = result.user;
+
+      await updateProfile(user, {
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      });
+
+      await auth.currentUser.reload();
+      setUser(auth.currentUser);
 
       const newUser = {
         name: user.displayName,

@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
+import { updateProfile } from "firebase/auth";
 
 const Login = () => {
   const { signInUser, signInWithGoogle } = useContext(AuthContext);
@@ -26,6 +27,11 @@ const Login = () => {
     try {
       const result = await signInWithGoogle();
       const user = result.user;
+
+      await updateProfile(user, {
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      });
 
       const newUser = {
         name: user.displayName,
