@@ -1,11 +1,19 @@
 import React from 'react';
+import HeroSlider from '../components/HeroSlider';
+import HomeServices from '../components/HomeServices';
+import WhyChooseUs from '../components/WhyChooseUs';
+import Testimonials from '../components/Testimonials';
 
 const Home = () => {
-    return (
-        <div>
-            <h1>Welcome to HomeHero</h1>;
-        </div>
-    );
+  return (
+    <>
+      <HeroSlider />
+      <HomeServices />
+      <WhyChooseUs />
+      <Testimonials />
+    </>
+  );
 };
+
 
 export default Home;
