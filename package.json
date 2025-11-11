@@ -20,8 +20,7 @@
     "react-hot-toast": "^2.6.0",
     "react-router": "^7.9.5",
     "react-router-dom": "^7.9.5",
-    "swiper": "^12.0.3",
-    "tailwindcss": "^4.1.17"
+    "swiper": "^12.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
@@ -33,6 +32,20 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "tailwindcss": "^4.1.17",
     "vite": "^7.2.2"
-  }
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MinhazulAlamin/home-hero-client.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MinhazulAlamin/home-hero-client/issues"
+  },
+  "homepage": "https://github.com/MinhazulAlamin/home-hero-client#readme"
 }

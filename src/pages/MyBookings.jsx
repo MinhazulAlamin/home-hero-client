@@ -13,7 +13,7 @@ const MyBookings = () => {
     if (!user?.email) return;
 
     // Fetch bookings
-    fetch(`http://localhost:3000/bookings?email=${user.email}`)
+    fetch(`http://localhost:3000/bookings?userEmail=${user.email}`)
       .then((res) => res.json())
       .then((data) => setBookings(data))
       .catch(() => toast.error("Failed to load bookings"));

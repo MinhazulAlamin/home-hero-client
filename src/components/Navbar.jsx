@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -31,7 +32,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
-      {/* Start: Logo + Mobile Dropdown */}
+      {/* Logo + Mobile Dropdown */}
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -52,27 +53,28 @@ const Navbar = () => {
         <Link to="/" className="btn btn-ghost text-xl">HomeHero</Link>
       </div>
 
-      {/* Center: Desktop Menu */}
+      {/* Desktop Menu */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           {navLinks}
         </ul>
       </div>
 
-      {/* End: Profile / Login / Register */}
+      {/* Profile / Login / Register */}
       <div className="navbar-end space-x-2">
-        {user ? (
-          <>
-            <NavLink to="/profile" className="btn btn-sm btn-outline">Profile</NavLink>
-            <button onClick={handleLogout} className="btn btn-sm btn-error text-white">Logout</button>
-          </>
-        ) : (
-          <>
-            <NavLink to="/login" className="btn btn-sm btn-outline">Login</NavLink>
-            <NavLink to="/register" className="btn btn-sm btn-primary text-white">Register</NavLink>
-          </>
-        )}
-      </div>
+  <ThemeToggle />
+  {user ? (
+    <>
+      <NavLink to="/profile" className="btn btn-sm btn-outline">Profile</NavLink>
+      <button onClick={handleLogout} className="btn btn-sm btn-error text-white">Logout</button>
+    </>
+  ) : (
+    <>
+      <NavLink to="/login" className="btn btn-sm btn-outline">Login</NavLink>
+      <NavLink to="/register" className="btn btn-sm btn-primary text-white">Register</NavLink>
+    </>
+  )}
+</div>
     </div>
   );
 };
