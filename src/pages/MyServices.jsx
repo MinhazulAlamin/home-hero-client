@@ -65,7 +65,7 @@ const MyServices = () => {
                   </td>
                   <td>{service.name}</td>
                   <td>{service.category}</td>
-                  <td>৳{service.price}</td>
+                  <td>${service.price}</td>
                   <td className="space-x-2">
                     <Link
                       to={`/edit-service/${service._id}`}
