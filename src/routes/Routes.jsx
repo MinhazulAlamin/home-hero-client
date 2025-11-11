@@ -12,6 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 import AddService from "../pages/AddService";
 import MainLayout from "../layouts/MainLayout";
 import Profile from "../pages/Profile";
+import EditService from "../components/EditService";
 
 export const router = createBrowserRouter([
   {
@@ -20,13 +21,14 @@ export const router = createBrowserRouter([
   children: [
     { path: "/", element: <Home /> },
     { path: "/services", element: <ServiceList /> },
-    { path: "/services/:id", element: <ServiceDetails /> },
+    { path: "/service/:id", element: <ServiceDetails /> },
     { path: "/login", element: <Login /> },
     { path: "/register", element: <Register /> },
     { path: "/profile", element: <PrivateRoute><Profile /></PrivateRoute> },
     { path: "/add-service", element: <PrivateRoute><AddService /></PrivateRoute> },
     { path: "/my-services", element: <PrivateRoute><MyServices /></PrivateRoute> },
     { path: "/my-bookings", element: <PrivateRoute><MyBookings /></PrivateRoute> },
+    { path: "/edit-service/:id", element: <PrivateRoute><EditService /></PrivateRoute> },
   ]
 }
 ]);

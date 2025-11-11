@@ -3,9 +3,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import { updateProfile } from "firebase/auth";
+import { auth } from "../firebase/firebase.config";
 
 const Login = () => {
-  const { signInUser, signInWithGoogle } = useContext(AuthContext);
+  const { signInUser, signInWithGoogle, setUser } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -32,6 +33,9 @@ const Login = () => {
         displayName: user.displayName,
         photoURL: user.photoURL,
       });
+
+      await auth.currentUser.reload();
+      setUser(auth.currentUser);
 
       const newUser = {
         name: user.displayName,

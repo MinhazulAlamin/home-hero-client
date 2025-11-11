@@ -1,56 +1,76 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-const AddService = () => {
+const EditService = () => {
   const { user } = useContext(AuthContext);
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     category: "",
     price: "",
     description: "",
     image: "",
-    providerName: user?.displayName || "",
-    providerEmail: user?.email || "",
   });
 
+  // Fetch service by ID
+  useEffect(() => {
+    fetch("http://localhost:3000/services")
+      .then((res) => res.json())
+      .then((data) => {
+        const service = data.find((s) => s._id === id);
+        if (service) {
+          setFormData({
+            name: service.name,
+            category: service.category,
+            price: service.price,
+            description: service.description,
+            image: service.image,
+          });
+        } else {
+          toast.error("Service not found");
+          navigate("/my-services");
+        }
+      })
+      .catch(() => toast.error("Failed to load service"));
+  }, [id, navigate]);
+
+  // Handle form input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Submit PATCH request
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await fetch("http://localhost:3000/services", {
-        method: "POST",
+      const res = await fetch(`http://localhost:3000/services/${id}`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          providerEmail: user.email, // ✅ Include this to pass validation
+        }),
       });
 
       if (res.ok) {
-        toast.success("Service added successfully");
-        setFormData({
-          name: "",
-          category: "",
-          price: "",
-          description: "",
-          image: "",
-          providerName: user?.displayName || "",
-          providerEmail: user?.email || "",
-        });
+        toast.success("Service updated successfully");
+        navigate("/my-services");
       } else {
-        toast.error("Failed to add service");
+        toast.error("Failed to update service");
       }
     } catch (error) {
-      toast.error("Error adding service");
+      toast.error("Error updating service");
     }
   };
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow rounded">
-      <h2 className="text-2xl font-bold mb-6">Add New Service</h2>
+      <h2 className="text-2xl font-bold mb-6">Edit Service</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
@@ -96,26 +116,12 @@ const AddService = () => {
           onChange={handleChange}
           required
         />
-        <input
-          type="text"
-          name="providerName"
-          className="input input-bordered w-full"
-          value={formData.providerName}
-          readOnly
-        />
-        <input
-          type="email"
-          name="providerEmail"
-          className="input input-bordered w-full"
-          value={formData.providerEmail}
-          readOnly
-        />
         <button type="submit" className="btn btn-primary w-full">
-          Add Service
+          Update Service
         </button>
       </form>
     </div>
   );
 };
 
-export default AddService;
+export default EditService;
