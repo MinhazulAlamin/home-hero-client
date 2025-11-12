@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast } from 'react-toastify';
 
 const MyServices = () => {
   const { user } = useContext(AuthContext);

@@ -13,6 +13,7 @@ import AddService from "../pages/AddService";
 import MainLayout from "../layouts/MainLayout";
 import Profile from "../pages/Profile";
 import EditService from "../components/EditService";
+import NotFound from "../pages/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,7 @@ export const router = createBrowserRouter([
     { path: "/my-services", element: <PrivateRoute><MyServices /></PrivateRoute> },
     { path: "/my-bookings", element: <PrivateRoute><MyBookings /></PrivateRoute> },
     { path: "/edit-service/:id", element: <PrivateRoute><EditService /></PrivateRoute> },
+    { path: "*", element: <NotFound></NotFound> },
   ]
 }
 ]);

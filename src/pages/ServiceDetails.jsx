@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import toast from "react-hot-toast";
+import { toast } from 'react-toastify';
 import Swal from "sweetalert2";
 
 const ServiceDetails = () => {

@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import toast from "react-hot-toast";
+import { toast } from 'react-toastify';
 import { updateProfile } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 

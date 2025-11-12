@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import toast from "react-hot-toast";
+import { toast } from 'react-toastify';
 import Swal from "sweetalert2";
 const MyBookings = () => {
   const { user } = useContext(AuthContext);

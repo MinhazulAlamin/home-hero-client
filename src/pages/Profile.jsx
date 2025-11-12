@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { updateProfile } from "firebase/auth";
-import toast from "react-hot-toast";
+import { toast } from 'react-toastify';
 import { auth } from "../firebase/firebase.config";
 
 const Profile = () => {

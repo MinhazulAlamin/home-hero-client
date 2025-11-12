@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast } from 'react-toastify';
+
 
 const EditService = () => {
   const { user } = useContext(AuthContext);
@@ -31,7 +32,7 @@ const EditService = () => {
             image: service.image,
           });
         } else {
-          toast.error("Service not found");
+          toast.error("Service not found!");
           navigate("/my-services");
         }
       })

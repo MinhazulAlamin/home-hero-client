@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import toast from "react-hot-toast";
+import { toast } from 'react-toastify';
 import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
@@ -32,7 +32,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
-      {/* Logo + Mobile Dropdown */}
+
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -53,14 +53,12 @@ const Navbar = () => {
         <Link to="/" className="btn btn-ghost text-xl">HomeHero</Link>
       </div>
 
-      {/* Desktop Menu */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           {navLinks}
         </ul>
       </div>
 
-      {/* Profile / Login / Register */}
       <div className="navbar-end space-x-2">
   <ThemeToggle />
   {user ? (
