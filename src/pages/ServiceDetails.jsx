@@ -10,9 +10,9 @@ const ServiceDetails = () => {
   const [comment, setComment] = useState("");
   const [hasReviewed, setHasReviewed] = useState(false);
   const [hasBooked, setHasBooked] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
-    // Fetch service details
     fetch(`http://localhost:3000/services/${id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -23,10 +23,11 @@ const ServiceDetails = () => {
           );
           setHasReviewed(reviewed);
         }
+        const ownerCheck = user?.email === data?.providerEmail;
+        setIsOwner(ownerCheck);
       })
       .catch(() => toast.error("Failed to load service"));
 
-    // Check if user has booked this service
     if (user?.email) {
       fetch(`http://localhost:3000/bookings?email=${user.email}`)
         .then((res) => res.json())
@@ -41,6 +42,11 @@ const ServiceDetails = () => {
   const handleBooking = async () => {
     if (!user?.email) {
       toast.error("You must be logged in to book.");
+      return;
+    }
+
+    if (isOwner) {
+      toast.error("You can't book your own service.");
       return;
     }
 
@@ -63,7 +69,8 @@ const ServiceDetails = () => {
         toast.success("Service booked successfully!");
         setHasBooked(true);
       } else {
-        toast.error("Failed to book service");
+        const errorData = await res.json();
+        toast.error(errorData.error || "Failed to book service");
       }
     } catch (error) {
       toast.error("Error booking service");
@@ -119,9 +126,13 @@ const ServiceDetails = () => {
           <p className="text-gray-600 mb-6">{service.description}</p>
 
           {user?.email && (
-            hasBooked ? (
+            isOwner ? (
+              <p className="text-red-500 font-medium mb-6">
+                 You can't book your own service.
+              </p>
+            ) : hasBooked ? (
               <p className="text-green-600 font-medium mb-6">
-                ✅ You’ve already booked this service.
+                 You've already booked this service.
               </p>
             ) : (
               <button
@@ -170,7 +181,7 @@ const ServiceDetails = () => {
 
           {user?.uid && !hasBooked && (
             <p className="text-red-500 mt-6">
-              ❌ You must book this service before submitting a review.
+               You must book this service before submitting a review.
             </p>
           )}
         </>
