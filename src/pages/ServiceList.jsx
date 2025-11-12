@@ -12,7 +12,7 @@ const ServiceList = () => {
   }, []);
 
   const fetchServices = () => {
-    let url = "http://localhost:3000/services";
+    let url = "http://localhost:3000/services/all";
     if (minPrice && maxPrice) {
       url += `?min=${minPrice}&max=${maxPrice}`;
     }
@@ -48,7 +48,7 @@ const ServiceList = () => {
           Filter
         </button>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((service) => (
           <div key={service._id} className="card bg-base-100 shadow-md">

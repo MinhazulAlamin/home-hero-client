@@ -1,17 +1,17 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
-
+import Swal from "sweetalert2";
 const MyBookings = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
   const [services, setServices] = useState([]);
   const [rating, setRating] = useState("");
   const [activeServiceId, setActiveServiceId] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (!user?.email) return;
-
     // Fetch bookings
     fetch(`http://localhost:3000/bookings?userEmail=${user.email}`)
       .then((res) => res.json())
@@ -24,7 +24,6 @@ const MyBookings = () => {
       .then((data) => setServices(data))
       .catch(() => toast.error("Failed to load services"));
   }, [user?.email]);
-
   const getUserRating = (serviceId) => {
     const service = services.find((s) => s._id === serviceId);
     const review = service?.reviews?.find((r) => r.userId === user?.uid);
@@ -35,6 +34,8 @@ const MyBookings = () => {
     e.preventDefault();
     if (!user?.uid) return toast.error("You must be logged in to rate.");
 
+    setSubmitting(true);
+
     const review = {
       userId: user.uid,
       userName: user.displayName,
@@ -42,31 +43,45 @@ const MyBookings = () => {
     };
 
     try {
-      const res = await fetch(`http://localhost:3000/services/${serviceId}/review`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(review),
-      });
+      const res = await fetch(
+        `http://localhost:3000/services/${serviceId}/review`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(review),
+        }
+      );
 
       if (res.ok) {
-        toast.success("Rating submitted!");
+        const updated = await fetch("http://localhost:3000/services").then(
+          (res) => res.json()
+        );
+        setServices(updated);
         setRating("");
-        setActiveServiceId(null);
-        fetch("http://localhost:3000/services")
-          .then((res) => res.json())
-          .then((data) => setServices(data));
+
+        Swal.fire({
+          icon: "success",
+          title: "Rated!",
+          text: "Your rating has been submitted.",
+          confirmButtonColor: "#2563eb",
+        });
+
+        setTimeout(() => setActiveServiceId(null), 0);
       } else {
         toast.error("Failed to submit rating");
       }
     } catch (error) {
       toast.error("Error submitting rating");
+    } finally {
+      setSubmitting(false);
     }
   };
 
   const handleCancel = async (bookingId) => {
-    const confirm = window.confirm("Are you sure you want to cancel this booking?");
+    const confirm = window.confirm(
+      "Are you sure you want to cancel this booking?"
+    );
     if (!confirm) return;
-
     try {
       const res = await fetch(`http://localhost:3000/bookings/${bookingId}`, {
         method: "DELETE",
@@ -82,67 +97,81 @@ const MyBookings = () => {
       toast.error("Error cancelling booking");
     }
   };
-
   return (
     <div className="max-w-6xl mx-auto mt-10 px-4">
-      <h2 className="text-3xl font-bold mb-6 text-center">📋 My Bookings</h2>
+      {" "}
+      <h2 className="text-3xl font-bold mb-6 text-center">
+         My Bookings
+      </h2>{" "}
       {bookings.length === 0 ? (
         <p className="text-center text-gray-500">You have no bookings yet.</p>
       ) : (
         <div className="overflow-x-auto">
+          {" "}
           <table className="table w-full border">
+            {" "}
             <thead className="bg-gray-100">
+              {" "}
               <tr>
-                <th>#</th>
-                <th>Service</th>
-                <th>Price</th>
-                <th>Date</th>
-                <th>Your Rating</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
+                {" "}
+                <th>#</th> <th>Service</th> <th>Price</th> <th>Date</th>{" "}
+                <th>Your Rating</th> <th>Actions</th>{" "}
+              </tr>{" "}
+            </thead>{" "}
             <tbody>
+              {" "}
               {bookings.map((booking, index) => {
                 const userRating = getUserRating(booking.serviceId);
                 return (
                   <>
+                    {" "}
                     <tr key={booking._id}>
-                      <td>{index + 1}</td>
-                      <td>{booking.serviceName}</td>
-                      <td>৳{booking.price}</td>
-                      <td>{booking.bookingDate}</td>
+                      {" "}
+                      <td>{index + 1}</td> <td>{booking.serviceName}</td>{" "}
+                      <td>৳{booking.price}</td> <td>{booking.bookingDate}</td>{" "}
                       <td>
+                        {" "}
                         {userRating ? (
-                          <span className="text-yellow-500 font-medium">⭐ {userRating}</span>
+                          <span className="text-yellow-500 font-medium">
+                            ⭐ {userRating}
+                          </span>
                         ) : (
                           <span className="text-gray-400">Not rated</span>
-                        )}
-                      </td>
+                        )}{" "}
+                      </td>{" "}
                       <td className="space-x-2">
+                        {" "}
                         {userRating ? (
-                          <span className="text-green-600 font-medium">✅ Rated</span>
+                          <span className="text-green-600 font-medium">
+                            ✅ Rated
+                          </span>
                         ) : (
                           <button
-                            onClick={() => setActiveServiceId(booking.serviceId)}
+                            onClick={() =>
+                              setActiveServiceId(booking.serviceId)
+                            }
                             className="btn btn-sm btn-primary"
                           >
-                            Rate
+                            {" "}
+                            Rate{" "}
                           </button>
-                        )}
+                        )}{" "}
                         <button
                           onClick={() => handleCancel(booking._id)}
                           className="btn btn-sm btn-error"
                         >
-                          Cancel
-                        </button>
-                      </td>
+                          {" "}
+                          Cancel{" "}
+                        </button>{" "}
+                      </td>{" "}
                     </tr>
-
                     {activeServiceId === booking.serviceId && (
                       <tr>
                         <td colSpan="6" className="bg-gray-50 p-4">
                           <form
-                            onSubmit={(e) => handleRatingSubmit(e, booking.serviceId)}
+                            onSubmit={(e) =>
+                              handleRatingSubmit(e, booking.serviceId)
+                            }
                             className="flex flex-col md:flex-row gap-4 items-center"
                           >
                             <input
@@ -173,5 +202,4 @@ const MyBookings = () => {
     </div>
   );
 };
-
 export default MyBookings;
