@@ -1,9 +1,8 @@
 import daisyui from 'daisyui';
-import themes from 'daisyui/src/colors/themes.js';
 
 export default {
+  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   darkMode: 'class',
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {},
   },
@@ -12,14 +11,28 @@ export default {
     themes: [
       {
         light: {
-          ...themes['[data-theme=light]'],
-          primary: 'blue',
-          secondary: 'teal',
+          primary: '#1E88E5',
+          secondary: '#FF7043',
+          accent: '#F5F5F5',
+          neutral: '#212121',
+          'base-100': '#FFFFFF',
+          info: '#0288D1',
+          success: '#43A047',
+          warning: '#FBC02D',
+          error: '#E53935',
         },
+      },
+      {
         dark: {
-          ...themes['[data-theme=dark]'],
-          primary: 'blue',
-          secondary: 'teal',
+          primary: '#BB86FC',
+          secondary: '#03DAC6',
+          accent: '#2C2C2C',
+          neutral: '#E0E0E0',
+          'base-100': '#121212',
+          info: '#81D4FA',
+          success: '#66BB6A',
+          warning: '#FFD54F',
+          error: '#EF5350',
         },
       },
     ],

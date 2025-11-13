@@ -3,9 +3,6 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: blue;
+  --color-primary: #632EE3;
   --color-secondary: teal;
-}
-html {
-  transition: background-color 0.3s ease, color 0.3s ease;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 const MyBookings = () => {
   const { user } = useContext(AuthContext);
@@ -78,10 +78,18 @@ const MyBookings = () => {
   };
 
   const handleCancel = async (bookingId) => {
-    const confirm = window.confirm(
-      "Are you sure you want to cancel this booking?"
-    );
-    if (!confirm) return;
+    const result = await Swal.fire({
+      title: "Cancel Booking?",
+      text: "Are you sure you want to cancel this booking?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, cancel it",
+    });
+
+    if (!result.isConfirmed) return;
+
     try {
       const res = await fetch(`http://localhost:3000/bookings/${bookingId}`, {
         method: "DELETE",
@@ -89,7 +97,7 @@ const MyBookings = () => {
 
       if (res.ok) {
         toast.success("Booking cancelled");
-        setBookings(bookings.filter((b) => b._id !== bookingId));
+        setBookings((prev) => prev.filter((b) => b._id !== bookingId));
       } else {
         toast.error("Failed to cancel booking");
       }
@@ -100,9 +108,7 @@ const MyBookings = () => {
   return (
     <div className="max-w-6xl mx-auto mt-10 px-4">
       {" "}
-      <h2 className="text-3xl font-bold mb-6 text-center">
-         My Bookings
-      </h2>{" "}
+      <h2 className="text-3xl font-bold mb-6 text-center">My Bookings</h2>{" "}
       {bookings.length === 0 ? (
         <p className="text-center text-gray-500">You have no bookings yet.</p>
       ) : (

@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const MyServices = () => {
   const { user } = useContext(AuthContext);
@@ -17,24 +18,35 @@ const MyServices = () => {
 
   // Delete service
   const handleDelete = async (id) => {
-    const confirm = window.confirm("Are you sure you want to delete this service?");
-    if (!confirm) return;
+  const result = await Swal.fire({
+    title: 'Are you sure?',
+    text: 'This service will be permanently deleted.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!',
+  });
 
-    try {
-      const res = await fetch(`http://localhost:3000/services/${id}`, {
-        method: "DELETE",
-      });
+  if (!result.isConfirmed) return;
 
-      if (res.ok) {
-        toast.success("Service deleted");
-        setServices((prev) => prev.filter((s) => s._id !== id));
-      } else {
-        toast.error("Failed to delete service");
-      }
-    } catch (error) {
-      toast.error("Error deleting service");
+  try {
+    const res = await fetch(
+      `http://localhost:3000/services/${id}?providerEmail=${user.email}`,
+      { method: 'DELETE' }
+    );
+
+    if (res.ok) {
+      toast.success('Service deleted');
+      setServices((prev) => prev.filter((s) => s._id !== id));
+    } else {
+      toast.error('Failed to delete service');
     }
-  };
+  } catch (error) {
+    toast.error('Error deleting service');
+  }
+};
+
 
   return (
     <div className="max-w-6xl mx-auto mt-10 p-6 bg-white shadow rounded">
