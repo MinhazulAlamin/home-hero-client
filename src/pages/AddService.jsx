@@ -1,8 +1,10 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import Spinner from "../components/Spinner";
 
 const AddService = () => {
+  const [loading, setLoading] = useState(false);
   const { user } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: "",
@@ -21,9 +23,10 @@ const AddService = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:3000/services", {
+      const res = await fetch("https://home-hero-api-server.vercel.app/services", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -45,8 +48,12 @@ const AddService = () => {
       }
     } catch (error) {
       toast.error("Error adding service");
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) return <Spinner />;
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow rounded">

@@ -43,8 +43,8 @@ const Login = () => {
         photoURL: user.photoURL,
       };
 
-      // Save user to database
-      await fetch("http://localhost:3000/users", {
+
+      await fetch("https://home-hero-api-server.vercel.app/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newUser),

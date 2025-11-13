@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import Spinner from "../components/Spinner";
 const MyBookings = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
@@ -9,21 +10,32 @@ const MyBookings = () => {
   const [rating, setRating] = useState("");
   const [activeServiceId, setActiveServiceId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user?.email) return;
-    // Fetch bookings
-    fetch(`http://localhost:3000/bookings?userEmail=${user.email}`)
-      .then((res) => res.json())
-      .then((data) => setBookings(data))
-      .catch(() => toast.error("Failed to load bookings"));
 
-    // Fetch services to check ratings
-    fetch("http://localhost:3000/services")
-      .then((res) => res.json())
-      .then((data) => setServices(data))
-      .catch(() => toast.error("Failed to load services"));
+    const fetchData = async () => {
+      try {
+        const bookingsRes = await fetch(
+          `https://home-hero-api-server.vercel.app/bookings?userEmail=${user.email}`
+        );
+        const bookingsData = await bookingsRes.json();
+        setBookings(bookingsData);
+
+        const servicesRes = await fetch("https://home-hero-api-server.vercel.app/services");
+        const servicesData = await servicesRes.json();
+        setServices(servicesData);
+      } catch {
+        toast.error("Failed to load bookings or services");
+      } finally {
+        setLoading(false); // stop spinner
+      }
+    };
+
+    fetchData();
   }, [user?.email]);
+
   const getUserRating = (serviceId) => {
     const service = services.find((s) => s._id === serviceId);
     const review = service?.reviews?.find((r) => r.userId === user?.uid);
@@ -44,7 +56,7 @@ const MyBookings = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/services/${serviceId}/review`,
+        `https://home-hero-api-server.vercel.app/services/${serviceId}/review`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -53,7 +65,7 @@ const MyBookings = () => {
       );
 
       if (res.ok) {
-        const updated = await fetch("http://localhost:3000/services").then(
+        const updated = await fetch("https://home-hero-api-server.vercel.app/services").then(
           (res) => res.json()
         );
         setServices(updated);
@@ -91,7 +103,7 @@ const MyBookings = () => {
     if (!result.isConfirmed) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/bookings/${bookingId}`, {
+      const res = await fetch(`https://home-hero-api-server.vercel.app/bookings/${bookingId}`, {
         method: "DELETE",
       });
 
@@ -105,6 +117,9 @@ const MyBookings = () => {
       toast.error("Error cancelling booking");
     }
   };
+
+  if (loading) return <Spinner />;
+
   return (
     <div className="max-w-6xl mx-auto mt-10 px-4">
       {" "}

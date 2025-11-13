@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 
 const HomeServices = () => {
   const [services, setServices] = useState([]);
-  const [title, setTitle] = useState("✨ Popular Services");
+  const [title, setTitle] = useState(" Popular Services");
 
   useEffect(() => {
-    fetch("http://localhost:3000/services")
+    fetch("https://home-hero-api-server.vercel.app/services")
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {

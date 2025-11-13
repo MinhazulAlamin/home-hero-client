@@ -8,7 +8,7 @@ const HeroSlider = () => {
   const [slides, setSlides] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/services")
+    fetch("https://home-hero-api-server.vercel.app/services")
       .then((res) => res.json())
       .then((data) => setSlides(data.slice(1, 4)))
       .catch(() => console.error("Failed to load slider services"));

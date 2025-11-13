@@ -4,68 +4,74 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <>
-      {/* Top Footer Section */}
       <footer className="footer sm:footer-horizontal bg-base-200 text-base-content p-10">
+
         <nav>
           <h6 className="footer-title">Services</h6>
-          <Link to="/" className="link link-hover">
+          <a href="/" className="link link-hover">
             Home Cleaning
-          </Link>
-          <Link to="/" className="link link-hover">
+          </a>
+          <a href="/" className="link link-hover">
             Fitness Training
-          </Link>
-          <Link to="/" className="link link-hover">
+          </a>
+          <a href="/" className="link link-hover">
             Event Photography
-          </Link>
-          <Link to="/" className="link link-hover">
+          </a>
+          <a href="/" className="link link-hover">
             Homeopathy
-          </Link>
+          </a>
         </nav>
+
+
         <nav>
           <h6 className="footer-title">HomeHero</h6>
-          <Link to="/" className="link link-hover">
+          <a href="/" className="link link-hover">
             About Us
-          </Link>
-          <Link to="/" className="link link-hover">
+          </a>
+          <a href="/" className="link link-hover">
             Contact Support
-          </Link>
-          <Link to="/" className="link link-hover">
+          </a>
+          <a href="/" className="link link-hover">
             Become a Provider
-          </Link>
-          <Link to="/" className="link link-hover">
+          </a>
+          <a href="/" className="link link-hover">
             Careers
-          </Link>
+          </a>
         </nav>
+
+
         <nav>
           <h6 className="footer-title">Legal</h6>
-          <Link to="/" className="link link-hover">
+          <a href="/" className="link link-hover">
             Terms of Service
-          </Link>
-          <Link to="/" className="link link-hover">
+          </a>
+          <a href="/" className="link link-hover">
             Privacy Policy
-          </Link>
-          <Link to="/" className="link link-hover">
+          </a>
+          <a href="/" className="link link-hover">
             Refund Policy
-          </Link>
+          </a>
         </nav>
       </footer>
 
-      {/* Bottom Footer Section */}
-      <footer className="footer bg-base-200 text-base-content border-t border-base-300 px-10 py-4">
+      <footer className="footer bg-base-200 text-base-content border-base-300 border-t px-10 py-4">
+
         <aside className="grid-flow-col items-center">
           <svg
             width="24"
             height="24"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
+            fillRule="evenodd"
+            clipRule="evenodd"
             className="fill-current"
           >
-            <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0z" />
+            <path d="M22.672 15.226l-2.432.811..."></path>
           </svg>
           <div>
-            <Link to="/" className="link link-hover text-2xl font-bold">
+            <p className="text-2xl font-bold">
               HomeHero © {new Date().getFullYear()}
-            </Link>
+            </p>
             <p className="mt-1">Empowering homes with trusted services</p>
           </div>
         </aside>
@@ -73,13 +79,8 @@ const Footer = () => {
         {/* Social Icons */}
         <nav className="md:place-self-center md:justify-self-end">
           <div className="grid grid-flow-col gap-4 text-base-content">
-            {/* X (Twitter) */}
-            <a
-              href="https://x.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X"
-            >
+
+            <a href="/" aria-label="X">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 1200 1227"
@@ -91,14 +92,8 @@ const Footer = () => {
               </svg>
             </a>
 
-            {/* YouTube */}
-            <a
-              href="https://youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-primary transition-colors"
-              aria-label="YouTube"
-            >
+
+            <a href="/" aria-label="YouTube">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -110,14 +105,8 @@ const Footer = () => {
               </svg>
             </a>
 
-            {/* Facebook */}
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-primary transition-colors"
-              aria-label="Facebook"
-            >
+
+            <a href="/" aria-label="Facebook">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

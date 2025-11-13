@@ -3,20 +3,26 @@ import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import Spinner from "../components/Spinner";
 
 const MyServices = () => {
   const { user } = useContext(AuthContext);
   const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Fetch provider's services
   useEffect(() => {
-    fetch(`http://localhost:3000/services/provider/${user.email}`)
-      .then((res) => res.json())
-      .then((data) => setServices(data))
-      .catch(() => toast.error("Failed to load services"));
-  }, [user.email]);
+  fetch(`https://home-hero-api-server.vercel.app/services/provider/${user.email}`)
+    .then((res) => res.json())
+    .then((data) => {
+      setServices(data);
+      setLoading(false)
+    })
+    .catch(() => {
+      toast.error("Failed to load services");
+      setLoading(false);
+    });
+}, [user.email]);
 
-  // Delete service
   const handleDelete = async (id) => {
   const result = await Swal.fire({
     title: 'Are you sure?',
@@ -32,7 +38,7 @@ const MyServices = () => {
 
   try {
     const res = await fetch(
-      `http://localhost:3000/services/${id}?providerEmail=${user.email}`,
+      `https://home-hero-api-server.vercel.app/services/${id}?providerEmail=${user.email}`,
       { method: 'DELETE' }
     );
 
@@ -47,6 +53,7 @@ const MyServices = () => {
   }
 };
 
+if (loading) return <Spinner />;
 
   return (
     <div className="max-w-6xl mx-auto mt-10 p-6 bg-white shadow rounded">

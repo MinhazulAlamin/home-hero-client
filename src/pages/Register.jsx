@@ -41,14 +41,14 @@ const Register = () => {
       await auth.currentUser.reload();
       setUser(auth.currentUser);
 
-      // Save user to MongoDB via backend
+
       const newUser = {
         name,
         email,
         photoURL,
       };
 
-      await fetch("http://localhost:3000/users", {
+      await fetch("https://home-hero-api-server.vercel.app/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,8 +82,8 @@ const Register = () => {
         photoURL: user.photoURL,
       };
 
-      // Save user to database
-      await fetch("http://localhost:3000/users", {
+
+      await fetch("https://home-hero-api-server.vercel.app/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newUser),
@@ -99,7 +99,7 @@ const Register = () => {
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
-        {/* Right Side Form */}
+
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <form onSubmit={handleRegister} className="card-body">
             <div className="form-control">

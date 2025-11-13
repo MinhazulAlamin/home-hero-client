@@ -17,9 +17,8 @@ const EditService = () => {
     image: "",
   });
 
-  // Fetch service by ID
   useEffect(() => {
-    fetch("http://localhost:3000/services")
+    fetch("https://home-hero-api-server.vercel.app/services")
       .then((res) => res.json())
       .then((data) => {
         const service = data.find((s) => s._id === id);
@@ -39,22 +38,20 @@ const EditService = () => {
       .catch(() => toast.error("Failed to load service"));
   }, [id, navigate]);
 
-  // Handle form input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Submit PATCH request
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:3000/services/${id}`, {
+      const res = await fetch(`https://home-hero-api-server.vercel.app/services/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
-          providerEmail: user.email, // ✅ Include this to pass validation
+          providerEmail: user.email,
         }),
       });
 

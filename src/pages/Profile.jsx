@@ -19,7 +19,7 @@ const Profile = () => {
       toast.success("Profile updated");
 
       // Optional: update in MongoDB too
-      await fetch(`http://localhost:3000/users`, {
+      await fetch(`https://home-hero-api-server.vercel.app/users`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: user.email, name, photoURL }),

@@ -16,8 +16,8 @@ const ServiceDetails = () => {
   const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
-    // Load service details
-    fetch(`http://localhost:3000/services/${id}`)
+
+    fetch(`https://home-hero-api-server.vercel.app/services/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setService(data);
@@ -34,10 +34,10 @@ const ServiceDetails = () => {
       })
       .catch(() => toast.error("Failed to load service"));
 
-    // Check booking status for current user
+
     if (!user?.email || !id) return;
 
-    fetch(`http://localhost:3000/bookings?email=${user.email}`)
+    fetch(`https://home-hero-api-server.vercel.app/bookings?email=${user.email}`)
       .then((res) => res.json())
       .then((bookings) => {
         if (Array.isArray(bookings)) {
@@ -55,7 +55,7 @@ const ServiceDetails = () => {
       });
   }, [id, user?.uid, user?.email]);
 
-  // Auto-fill booking date when modal opens
+
   useEffect(() => {
     const modal = document.getElementById("booking-modal");
     if (!modal) return;
@@ -97,10 +97,10 @@ const ServiceDetails = () => {
       email: user.email,
     };
 
-    console.log("Booking payload:", booking); // ✅ Debug log
+    console.log("Booking payload:", booking);
 
     try {
-      const res = await fetch("http://localhost:3000/bookings", {
+      const res = await fetch("https://home-hero-api-server.vercel.app/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(booking),
@@ -143,7 +143,7 @@ const ServiceDetails = () => {
     };
 
     try {
-      const res = await fetch(`http://localhost:3000/services/${id}/review`, {
+      const res = await fetch(`https://home-hero-api-server.vercel.app/services/${id}/review`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(review),
@@ -153,7 +153,7 @@ const ServiceDetails = () => {
         toast.success("Review submitted!");
         setComment("");
         setHasReviewed(true);
-        fetch(`http://localhost:3000/services/${id}`)
+        fetch(`https://home-hero-api-server.vercel.app/services/${id}`)
           .then((res) => res.json())
           .then((data) => setService(data));
       } else {

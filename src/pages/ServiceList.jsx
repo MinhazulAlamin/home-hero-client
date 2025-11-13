@@ -1,27 +1,38 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import React from "react";
+import Spinner from "../components/Spinner";
 
 const ServiceList = () => {
   const [services, setServices] = useState([]);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchServices();
   }, []);
 
   const fetchServices = () => {
-    let url = "http://localhost:3000/services/all";
+    setLoading(true);
+    let url = "https://home-hero-api-server.vercel.app/services/all";
     if (minPrice && maxPrice) {
       url += `?min=${minPrice}&max=${maxPrice}`;
     }
 
     fetch(url)
       .then((res) => res.json())
-      .then((data) => setServices(data))
-      .catch(() => console.error("Failed to fetch services"));
+      .then((data) => {
+        setServices(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        console.error("Failed to fetch services");
+        setLoading(false);
+      });
   };
+
+  if (loading) return <Spinner />;
 
   return (
     <div className="max-w-7xl mx-auto mt-10 px-4">
