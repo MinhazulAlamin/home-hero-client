@@ -1,19 +1,50 @@
-🏠 HomeHero
-Empowering homes with trusted services.
+# 🏡 HomeHero
 
- Live Site
-https://home-hero-a10.netlify.app/
+## 📖 Description
+**HomeHero** is a full-stack service booking platform where users can explore services, book appointments, and rate providers.  
+It delivers a polished experience with responsive UI, instant feedback, and persistent rating/booking logic.  
+The project is deployed with **Netlify (frontend)** and **Vercel (backend)**.
 
-✨ Key Features
--  User-Centric Booking System
-Seamless service booking with real-time availability and instant confirmation.
--  Per-User Rating & Review Logic
-Each user can rate a service once, with ratings persisting across cancellations and rebookings.
--  Instant UI Feedback
-Ratings, bookings, and cancellations reflect immediately with Toastify notifications and loading spinners.
--  Responsive Design
-Mobile-first layout with accessible navigation, dropdowns, and error boundaries.
--  Theme Switching (Light/Dark)
-WCAG-compliant color palettes with DaisyUI integration and smooth toggle support.
--  Provider Dashboard
-Service management with edit/delete functionality, protected by email-based authorization.
+🔗 **Live Link:** [HomeHero](https://home-hero-a10.netlify.app)
+---
+
+---
+
+## 🛠️ Technologies Used
+- **Frontend:** React.js, Tailwind CSS, DaisyUI, Framer Motion  
+- **Backend:** Node.js, Express.js, MongoDB (Mongoose)  
+- **Auth:** Firebase Authentication  
+- **Deployment:** Netlify (client), Vercel (server)  
+- **Notifications:** React Toastify, SweetAlert2  
+
+---
+
+## ✨ Features
+- 🔐 User authentication (login/register with Firebase)  
+- 📋 Service listing with filters (min/max price)  
+- ⭐ Rating system (per-user rating persists independently of bookings)  
+- 🛒 Booking system with cancel option  
+- 🖼️ Responsive UI with loading spinners, skeleton loaders, and custom error pages  
+- 🎨 Animated transitions with Framer Motion  
+- 📢 Notifications with React Toastify & SweetAlert2  
+
+---
+
+## 📦 Dependencies
+- `react`, `react-router-dom`  
+- `tailwindcss`, `daisyui`  
+- `framer-motion`  
+- `react-toastify`, `sweetalert2`  
+- `express`, `mongoose`  
+- `firebase`  
+- `cors`, `dotenv`  
+
+---
+
+## 🖥️ Run Locally
+Clone the repo → `git clone https://github.com/your-username/homehero.git &&
+cd homehero &&
+npm install` → set up `.env` with `MONGO_URI`, `PORT`, `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN` → start frontend with `npm run dev` 
+and backend with `npm start`.
+
+---
