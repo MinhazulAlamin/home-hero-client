@@ -14,6 +14,9 @@ import MainLayout from "../layouts/MainLayout";
 import Profile from "../pages/Profile";
 import EditService from "../components/EditService";
 import NotFound from "../pages/NotFound";
+import About from "../pages/About";
+import DashboardLayout from "../layouts/DashboardLayout";
+import DashboardHome from "../pages/Dashboard/DashboardHome";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +25,7 @@ export const router = createBrowserRouter([
   children: [
     { path: "/", element: <Home /> },
     { path: "/services", element: <ServiceList /> },
+    { path: "/about", element: <About></About> },
     { path: "/service/:id", element: <ServiceDetails /> },
     { path: "/login", element: <Login /> },
     { path: "/register", element: <Register /> },
@@ -31,6 +35,23 @@ export const router = createBrowserRouter([
     { path: "/my-bookings", element: <PrivateRoute><MyBookings /></PrivateRoute> },
     { path: "/edit-service/:id", element: <PrivateRoute><EditService /></PrivateRoute> },
     { path: "*", element: <NotFound></NotFound> },
-  ]
-}
+  ],
+},
+{
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      { index: true, element: <DashboardHome /> },
+      { path: "profile", element: <Profile /> },
+      { path: "add-service", element: <AddService /> },
+      { path: "my-services", element: <MyServices /> },
+      { path: "edit-service/:id", element: <EditService /> },
+      { path: "my-bookings", element: <MyBookings /> },
+    ],
+  },
+
 ]);

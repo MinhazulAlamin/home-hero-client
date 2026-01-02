@@ -24,6 +24,7 @@ const Navbar = () => {
       <li>
         <NavLink to="/services">Services</NavLink>
       </li>
+
       {user && (
         <>
           <li>
@@ -35,14 +36,19 @@ const Navbar = () => {
           <li>
             <NavLink to="/my-bookings">My Bookings</NavLink>
           </li>
+          <li>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+          </li>
         </>
       )}
+      <li>
+        <NavLink to="/about">About</NavLink>
+      </li>
     </>
   );
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
-
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -78,11 +84,9 @@ const Navbar = () => {
         </Link>
       </div>
 
-
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navLinks}</ul>
       </div>
-
 
       <div className="navbar-end space-x-2">
         <ThemeToggle />

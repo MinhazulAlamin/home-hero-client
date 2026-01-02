@@ -10,37 +10,36 @@ const cardVariants = {
   }),
 };
 
-const WhyChooseUs = () => (
-  <div className="py-10 px-4 shadow rounded-lg bg-base-100 container mx-auto">
-    {/* Animated heading */}
+const Highlights = () => (
+  <section className="py-12 container mx-auto">
     <motion.h2
-      className="text-3xl font-bold text-center mb-8"
+      className="text-3xl font-bold mb-6 text-center"
       initial={{ opacity: 0, y: -30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      viewport={{ once: false, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.3 }}
     >
-      Why Choose Us
+      Why HomeHero?
     </motion.h2>
 
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+    <div className="grid md:grid-cols-3 gap-6">
       {[
         {
-          title: "Trusted Providers",
-          text: "All services are verified and rated by real customers.",
+          title: "Verified Providers",
+          text: "All professionals are background-checked and trusted.",
         },
         {
-          title: "Fast Booking",
-          text: "Book your service in just a few clicks — no hassle.",
+          title: "Affordable Pricing",
+          text: "Transparent rates with no hidden fees.",
         },
         {
           title: "24/7 Support",
-          text: "Our team is always ready to help you with any issue.",
+          text: "We're here whenever you need us.",
         },
       ].map((item, i) => (
         <motion.div
           key={i}
-          className="card bg-base-100 shadow-sm p-6 rounded-lg transition hover:shadow-md"
+          className="card bg-base-100 shadow-sm p-6 rounded-lg"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false, amount: 0.3 }}
@@ -52,7 +51,7 @@ const WhyChooseUs = () => (
         </motion.div>
       ))}
     </div>
-  </div>
+  </section>
 );
 
-export default WhyChooseUs;
+export default Highlights;

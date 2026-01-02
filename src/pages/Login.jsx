@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 
@@ -42,7 +42,6 @@ const Login = () => {
         email: user.email,
         photoURL: user.photoURL,
       };
-
 
       await fetch("https://home-hero-api-server.vercel.app/users", {
         method: "POST",
@@ -131,6 +130,15 @@ const Login = () => {
                 </g>
               </svg>
               Login with Google
+            </button>
+            <button
+              className="btn btn-outline btn-sm"
+              onClick={() => {
+                setEmail("demo@user.com");
+                setPassword("Demo#123");
+              }}
+            >
+              Demo User
             </button>
           </form>
         </div>
